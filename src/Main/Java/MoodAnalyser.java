@@ -8,18 +8,25 @@ public class MoodAnalyser {
         System.out.println("Welcome to Mood Analyser");
     }
 
-    public MoodAnalyser() {
-    }
-
     public MoodAnalyser(String message) {
         this.message = message;
     }
 
+    public String moodAnalyseMethod(String message)
+    {
+        this.message=message;
+        return moodAnalyseMethod();
+    }
     public String moodAnalyseMethod()
     {
-        if (message.contains("sad"))
-            return "SAD";
-        else
+        try {
+            if (message.contains("sad"))
+                return "SAD";
+            else
+                return "HAPPY";
+        }
+        catch (NullPointerException e){
             return "HAPPY";
+        }
     }
 }
