@@ -7,7 +7,15 @@ public class MoodAnalyser {
     public static void main(String[] args) {
         System.out.println("Welcome to Mood Analyser");
     }
-    public String moodAnalyseMethod(String message)
+
+    public MoodAnalyser() {
+    }
+
+    public MoodAnalyser(String message) {
+        this.message = message;
+    }
+
+    public String moodAnalyseMethod()
     {
         if (message.contains("sad"))
             return "SAD";
