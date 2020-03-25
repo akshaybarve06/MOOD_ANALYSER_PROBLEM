@@ -12,21 +12,16 @@ public class MoodAnalyser {
         this.message = message;
     }
 
-    public String moodAnalyseMethod(String message)
-    {
-        this.message=message;
-        return moodAnalyseMethod();
-    }
-    public String moodAnalyseMethod()
-    {
+    public String moodAnalyseMethod() throws MoodAnalyserCustomException {
         try {
-            if (message.contains("sad"))
+            if (message.length() == 0)
+                throw new MoodAnalyserCustomException("Please Enter Value..Mood Cant be NULL", MoodAnalyserCustomException.UserDefinedDataType.NULL_EXCEPTION);
+            else if (message.contains("sad"))
                 return "SAD";
             else
                 return "HAPPY";
-        }
-        catch (NullPointerException e){
-            return "HAPPY";
+        } catch (NullPointerException e) {
+            throw new MoodAnalyserCustomException("Please Enter Value..Mood Cant be NULL", MoodAnalyserCustomException.UserDefinedDataType.NULL_EXCEPTION);
         }
     }
 }
