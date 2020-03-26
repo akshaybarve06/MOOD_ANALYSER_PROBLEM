@@ -56,7 +56,7 @@ public class MoodAnalyserTest {
         try {
             MoodAnalyserFactory.getConstructor("MoodAnalyser",String.class);
         } catch (MoodAnalyserCustomException e) {
-            Assert.assertEquals(MoodAnalyserCustomException.UserDefinedDataType.NO_SUCH_CLASS,e.userDefinedObject);
+            Assert.assertEquals(MoodAnalyserCustomException.UserDefinedDataType.NO_SUCH_CLASS_EXCEPTION,e.userDefinedObject);
         }
     }
     @Test
@@ -65,11 +65,11 @@ public class MoodAnalyserTest {
         {
             MoodAnalyserFactory.getConstructor("MoodAnalyser", String.class ,Integer.class);
         } catch (MoodAnalyserCustomException e) {
-            Assert.assertEquals(MoodAnalyserCustomException.UserDefinedDataType.NO_SUCH_METHOD,e.userDefinedObject);
+            Assert.assertEquals(MoodAnalyserCustomException.UserDefinedDataType.NO_SUCH_METHOD_EXCEPTION,e.userDefinedObject);
         }
     }
     @Test
-    public void happyMessageWhenProper_ReturnHappy() {
+    public void happyMessage_WhenProper_ReturnHappy() {
         try
         {
             Constructor constructor = MoodAnalyserFactory.getConstructor("MoodAnalyser",Integer.class);
@@ -81,7 +81,7 @@ public class MoodAnalyserTest {
         }
     }
     @Test
-    public void happyMessageWhenImproper_ReturnHappy() {
+    public void happy_WhenImproper_ReturnHappy() {
         try
         {
             Constructor constructor = MoodAnalyserFactory.getConstructor("MoodAnalyser",Integer.class);
@@ -89,7 +89,7 @@ public class MoodAnalyserTest {
             Object moodObj = MoodAnalyserFactory.invokeMethod(moodObject, "AnalyseMood");
             Assert.assertEquals("HAPPY",moodObj);
         } catch (MoodAnalyserCustomException e) {
-            Assert.assertEquals(MoodAnalyserCustomException.UserDefinedDataType.NO_SUCH_METHOD,e.userDefinedObject);
+            Assert.assertEquals(MoodAnalyserCustomException.UserDefinedDataType.NO_SUCH_METHOD_EXCEPTION,e.userDefinedObject);
         }
     }
     @Test
@@ -107,14 +107,25 @@ public class MoodAnalyserTest {
         }
     }
     @Test
-    public void happyImproper_thenThrowException() throws MoodAnalyserCustomException{
+    public void happyImproper_returnThrowException() throws MoodAnalyserCustomException{
         try {
             Constructor constructor = MoodAnalyserFactory.getConstructor("MoodAnalyser");
             MoodAnalyser object = MoodAnalyserFactory.createMoodAnalyserObject(constructor);
             MoodAnalyserFactory.moodAnalyserFieldMethod(object,"Message","I'm Happy ");
             Object moodObj = MoodAnalyserFactory.invokeMethod(object, "analyseMood");
         } catch (MoodAnalyserCustomException e) {
-            Assert.assertEquals(MoodAnalyserCustomException.UserDefinedDataType.NO_SUCH_FIELD,e.userDefinedObject);
+            Assert.assertEquals(MoodAnalyserCustomException.UserDefinedDataType.NO_SUCH_FIELD_EXCEPTION,e.userDefinedObject);
+        }
+    }
+    @Test
+    public void nullMessageProper_returnThrowException() {
+        try {
+            Constructor constructor = MoodAnalyserFactory.getConstructor("MoodAnalyser");
+            MoodAnalyser object = MoodAnalyserFactory.createMoodAnalyserObject(constructor);
+            MoodAnalyserFactory.moodAnalyserFieldMethod(object,"message",null);
+            Object mood = MoodAnalyserFactory.invokeMethod(object, "analyseMood");
+        } catch (MoodAnalyserCustomException e) {
+            Assert.assertEquals(MoodAnalyserCustomException.UserDefinedDataType.INVOCATION_TARGET_EXCEPTION,e.userDefinedObject);
         }
     }
 }

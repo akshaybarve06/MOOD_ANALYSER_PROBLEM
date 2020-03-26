@@ -34,4 +34,8 @@ public class MoodAnalyser {
         MoodAnalyser that = (MoodAnalyser) obj;
         return Objects.equals(message, that.message);
     }
+    @Override
+    public int hashCode() {
+        return Objects.hash(message);
+    }
 }

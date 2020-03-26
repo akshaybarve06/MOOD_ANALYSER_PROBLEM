@@ -13,9 +13,9 @@ public class MoodAnalyserFactory {
             Class<?>  moodAnalyserClass=Class.forName(className);
             return moodAnalyserClass.getConstructor(parameter);
         }catch (ClassNotFoundException e){
-            throw new MoodAnalyserCustomException("Class not found",MoodAnalyserCustomException.UserDefinedDataType.NO_SUCH_CLASS);
+            throw new MoodAnalyserCustomException("Class not found",MoodAnalyserCustomException.UserDefinedDataType.NO_SUCH_CLASS_EXCEPTION);
         }catch (NoSuchMethodException e) {
-            throw new MoodAnalyserCustomException("Method not found",MoodAnalyserCustomException.UserDefinedDataType.NO_SUCH_METHOD);
+            throw new MoodAnalyserCustomException("Method not found",MoodAnalyserCustomException.UserDefinedDataType.NO_SUCH_METHOD_EXCEPTION);
         }
     }
     public static MoodAnalyser createMoodAnalyserObject(Constructor constructor, Object... objects) {
@@ -33,19 +33,24 @@ public class MoodAnalyserFactory {
             Object result = moodMethod.invoke(moodAnalyserObject);
             return result;
         } catch (NoSuchMethodException e) {
-            throw new MoodAnalyserCustomException("Method not found",MoodAnalyserCustomException.UserDefinedDataType.NO_SUCH_METHOD);
+            throw new MoodAnalyserCustomException("Method not found",MoodAnalyserCustomException.UserDefinedDataType.NO_SUCH_METHOD_EXCEPTION);
         } catch (IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
         return null;
     }
-    public static void moodAnalyserFieldMethod(Object object1, String message, String fieldValue) {
+
+    public static void moodAnalyserFieldMethod(Object object, String message, String fieldValue) throws MoodAnalyserCustomException {
         try {
-            Class<?> classObject = object1.getClass();
+            Class<?> classObject = object.getClass();
             Field fieldObject = classObject.getDeclaredField(message);
-            fieldObject.set(object1,fieldValue);
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            e.printStackTrace();
+            fieldObject.set(object,fieldValue);
+        } catch (NoSuchFieldException e ) {
+            throw new MoodAnalyserCustomException("No Such Field Found",MoodAnalyserCustomException.UserDefinedDataType.NO_SUCH_FIELD_EXCEPTION);
+        }
+        catch ( IllegalAccessException e) {
+            throw new MoodAnalyserCustomException("Message Shouldn't Be NULL",MoodAnalyserCustomException.UserDefinedDataType.ILLEGAL_ACCESS_EXCEPTION);
         }
     }
+
 }
