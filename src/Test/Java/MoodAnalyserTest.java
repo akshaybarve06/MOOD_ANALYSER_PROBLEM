@@ -47,11 +47,19 @@ public class MoodAnalyserTest {
         }
     }
     @Test
-    public void givenObject_WhenEqualsWithParameter_ThenTrue() throws MoodAnalyserCustomException {
+    public void givenObjectEqualsWithParameter_ReturnTrue() throws MoodAnalyserCustomException {
         MoodAnalyser MoodAnalyser = new MoodAnalyser("Hello");
         Constructor constructor = MoodAnalyserFactory.getConstructor("MoodAnalyzer", String.class);
         MoodAnalyser moodAnalyserObject = MoodAnalyserFactory.createMoodAnalyserObject(constructor, "Hello");
         boolean result = MoodAnalyser.equals(moodAnalyserObject);
         Assert.assertTrue("true", result);
+    }
+    @Test
+    public void givenClassWithParameterWrong_ReturnClassNotFound() {
+        try {
+            MoodAnalyserFactory.getConstructor("MoodAnalyser",String.class);
+        } catch (MoodAnalyserCustomException e) {
+            Assert.assertEquals(MoodAnalyserCustomException.UserDefinedDataType.NO_SUCH_CLASS,e.userDefinedObject);
+        }
     }
 }
