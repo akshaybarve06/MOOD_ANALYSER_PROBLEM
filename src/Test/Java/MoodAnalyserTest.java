@@ -1,9 +1,12 @@
 package Test.Java;
 
 import Main.Java.MoodAnalyserCustomException;
+import Main.Java.MoodAnalyserFactory;
 import org.junit.Assert;
 import org.junit.Test;
 import Main.Java.MoodAnalyser;
+
+import java.lang.reflect.Constructor;
 
 public class MoodAnalyserTest {
 
@@ -33,5 +36,13 @@ public class MoodAnalyserTest {
         catch( MoodAnalyserCustomException e) {
             Assert.assertEquals(MoodAnalyserCustomException.UserDefinedDataType.NULL_EXCEPTION,e.userDefinedObject);
         }
+    }
+    @Test
+    public void givenObject_WhenEquals_ThenTrue() throws MoodAnalyserCustomException {
+        MoodAnalyser MoodAnalyser = new MoodAnalyser();
+        Constructor constructor = MoodAnalyserFactory.getConstructor("MoodAnalyzer");
+        MoodAnalyser moodAnalyserObject = MoodAnalyserFactory.createMoodAnalyserObject(constructor);
+        boolean result = MoodAnalyser.equals(moodAnalyserObject);
+        Assert.assertTrue("true",result);
     }
 }
