@@ -1,13 +1,13 @@
 package Main.Java;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 public class MoodAnalyserFactory {
 
-    public static Constructor getConstructor(String className, Class... parameter) throws MoodAnalyserCustomException
-    {
+    public static Constructor getConstructor(String className, Class... parameter) throws MoodAnalyserCustomException {
         try
         {
             Class<?>  moodAnalyserClass=Class.forName(className);
@@ -39,5 +39,13 @@ public class MoodAnalyserFactory {
         }
         return null;
     }
-
+    public static void moodAnalyserFieldMethod(Object object1, String message, String fieldValue) {
+        try {
+            Class<?> classObject = object1.getClass();
+            Field fieldObject = classObject.getDeclaredField(message);
+            fieldObject.set(object1,fieldValue);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
 }
