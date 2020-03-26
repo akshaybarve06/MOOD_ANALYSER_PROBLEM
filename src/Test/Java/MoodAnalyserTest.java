@@ -106,4 +106,15 @@ public class MoodAnalyserTest {
             e.printStackTrace();
         }
     }
+    @Test
+    public void happyImproper_thenThrowException() throws MoodAnalyserCustomException{
+        try {
+            Constructor constructor = MoodAnalyserFactory.getConstructor("MoodAnalyser");
+            MoodAnalyser object = MoodAnalyserFactory.createMoodAnalyserObject(constructor);
+            MoodAnalyserFactory.moodAnalyserFieldMethod(object,"Message","I'm Happy ");
+            Object moodObj = MoodAnalyserFactory.invokeMethod(object, "analyseMood");
+        } catch (MoodAnalyserCustomException e) {
+            Assert.assertEquals(MoodAnalyserCustomException.UserDefinedDataType.NO_SUCH_FIELD,e.userDefinedObject);
+        }
+    }
 }
