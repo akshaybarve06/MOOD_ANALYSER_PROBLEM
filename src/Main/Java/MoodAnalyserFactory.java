@@ -5,15 +5,17 @@ import java.lang.reflect.InvocationTargetException;
 
 public class MoodAnalyserFactory {
 
-    public static Constructor getConstructor(String className, Class... parameter) {
+    public static Constructor getConstructor(String className, Class... parameter) throws MoodAnalyserCustomException
+    {
         try
         {
             Class<?>  moodAnalyserClass=Class.forName(className);
             return moodAnalyserClass.getConstructor(parameter);
-        }catch (Exception e){
-            System.out.println(e);;
+        }catch (ClassNotFoundException e){
+            throw new MoodAnalyserCustomException("Class not found",MoodAnalyserCustomException.UserDefinedDataType.NO_SUCH_CLASS);
+        }catch (NoSuchMethodException e) {
+            throw new MoodAnalyserCustomException("Method not found",MoodAnalyserCustomException.UserDefinedDataType.NO_SUCH_METHOD);
         }
-        return null;
     }
     public static MoodAnalyser createMoodAnalyserObject(Constructor constructor) {
         try {

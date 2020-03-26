@@ -38,11 +38,39 @@ public class MoodAnalyserTest {
         }
     }
     @Test
+    public void emptyMessage_thenEmptyMoodException()
+    {
+        try{
+            MoodAnalyser moodAnalyserObject = new MoodAnalyser("");
+            moodAnalyserObject.moodAnalyseMethod();
+        }
+        catch (MoodAnalyserCustomException e)
+        {
+            Assert.assertEquals(MoodAnalyserCustomException.UserDefinedDataType.EMPTY_EXCEPTION,e.userDefinedObject);
+        }
+    }
+    @Test
     public void givenObject_WhenEquals_ThenTrue() throws MoodAnalyserCustomException {
         MoodAnalyser MoodAnalyser = new MoodAnalyser();
         Constructor constructor = MoodAnalyserFactory.getConstructor("MoodAnalyzer");
         MoodAnalyser moodAnalyserObject = MoodAnalyserFactory.createMoodAnalyserObject(constructor);
         boolean result = MoodAnalyser.equals(moodAnalyserObject);
         Assert.assertTrue("true",result);
+    }
+    @Test
+    public void class_whenWrong_returnClassNotFound() {
+        try {
+            MoodAnalyserFactory.getConstructor("MoodAnalyser");
+        } catch (MoodAnalyserCustomException e) {
+            Assert.assertEquals(MoodAnalyserCustomException.UserDefinedDataType.NO_SUCH_CLASS,e.userDefinedObject);
+        }
+    }
+    @Test
+    public void constructor_whenWrong_returnNoSuchMethod() {
+        try {
+            MoodAnalyserFactory.getConstructor("MoodAnalyzer",Integer.class);
+        } catch (MoodAnalyserCustomException e) {
+            Assert.assertEquals(MoodAnalyserCustomException.UserDefinedDataType.NO_SUCH_METHOD,e.userDefinedObject);
+        }
     }
 }
