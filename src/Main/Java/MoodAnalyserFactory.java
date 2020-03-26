@@ -17,12 +17,12 @@ public class MoodAnalyserFactory {
             throw new MoodAnalyserCustomException("Method not found",MoodAnalyserCustomException.UserDefinedDataType.NO_SUCH_METHOD);
         }
     }
-    public static MoodAnalyser createMoodAnalyserObject(Constructor constructor) {
+    public static MoodAnalyser createMoodAnalyserObject(Constructor constructor, Object... objects) {
         try {
-            return (MoodAnalyser) constructor.newInstance();
+            return (MoodAnalyser) constructor.newInstance(objects);
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
-       }
+        }
         return null;
     }
 }
