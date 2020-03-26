@@ -5,12 +5,11 @@ import Main.Java.MoodAnalyserFactory;
 import org.junit.Assert;
 import org.junit.Test;
 import Main.Java.MoodAnalyser;
-
 import java.lang.reflect.Constructor;
 
 public class MoodAnalyserTest {
 
-    MoodAnalyser object = new MoodAnalyser("I'm in Happy Mood..");
+    MoodAnalyser object = new MoodAnalyser("I'm Happy..");
 
     @Test
     public void message_whenResponseSad() throws MoodAnalyserCustomException {
@@ -40,8 +39,8 @@ public class MoodAnalyserTest {
     @Test
     public void emptyMessage_thenEmptyMoodException() {
         try {
-            MoodAnalyser moodAnalyserObject = new MoodAnalyser("");
-            moodAnalyserObject.moodAnalyseMethod();
+            MoodAnalyser moodObject = new MoodAnalyser("");
+            moodObject.moodAnalyseMethod();
         } catch (MoodAnalyserCustomException e) {
             Assert.assertEquals(MoodAnalyserCustomException.UserDefinedDataType.EMPTY_EXCEPTION, e.userDefinedObject);
         }
@@ -50,12 +49,12 @@ public class MoodAnalyserTest {
     public void givenObjectEqualsWithParameter_ReturnTrue() throws MoodAnalyserCustomException {
         MoodAnalyser MoodAnalyser = new MoodAnalyser("Hello");
         Constructor constructor = MoodAnalyserFactory.getConstructor("MoodAnalyzer", String.class);
-        MoodAnalyser moodAnalyserObject = MoodAnalyserFactory.createMoodAnalyserObject(constructor, "Hello");
-        boolean result = MoodAnalyser.equals(moodAnalyserObject);
+        MoodAnalyser moodObject = MoodAnalyserFactory.createMoodAnalyserObject(constructor, "Hello");
+        boolean result = MoodAnalyser.equals(moodObject);
         Assert.assertTrue("true", result);
     }
     @Test
-    public void givenClassWithParameterWrong_ReturnClassNotFound() {
+    public void classWithParameterWrong_ReturnClassNotFound() {
         try {
             MoodAnalyserFactory.getConstructor("MoodAnalyser",String.class);
         } catch (MoodAnalyserCustomException e) {
@@ -63,7 +62,7 @@ public class MoodAnalyserTest {
         }
     }
     @Test
-    public void givenConstructorWithParameterWrong_ReturnNoSuchMethod() {
+    public void constructorWithParameterWrong_ReturnNoSuchMethod() {
         try
         {
             MoodAnalyserFactory.getConstructor("MoodAnalyser", String.class ,Integer.class);
@@ -72,15 +71,16 @@ public class MoodAnalyserTest {
         }
     }
     @Test
-    public void givenHappyMessage_WhenProper_ShouldReturnHappy() {
+    public void happyMessageWhenProper_ReturnHappy() {
         try
         {
-            Constructor constructor = MoodAnalyserFactory.getConstructor("MoodAnalyzer",String.class);
-            Object moodAnalyserObject = MoodAnalyserFactory.createMoodAnalyserObject(constructor,"I am in Happy mood");
-            Object mood = MoodAnalyserFactory.invokeMethod(moodAnalyserObject, "analyseMood");
+            Constructor constructor = MoodAnalyserFactory.getConstructor("MoodAnalyzer",Integer.class);
+            Object moodObject = MoodAnalyserFactory.createMoodAnalyserObject(constructor,"I'm Happy");
+            Object mood = MoodAnalyserFactory.invokeMethod(moodObject, "analyseMood");
             Assert.assertEquals("HAPPY",mood);
         } catch (MoodAnalyserCustomException e) {
             e.printStackTrace();
         }
     }
+
 }
