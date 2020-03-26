@@ -2,6 +2,7 @@ package Main.Java;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 public class MoodAnalyserFactory {
 
@@ -25,4 +26,18 @@ public class MoodAnalyserFactory {
         }
         return null;
     }
+    public static Object invokeMethod(Object moodAnalyserObject, String analyseMood) throws MoodAnalyserCustomException{
+        try {
+            Class objectClass = moodAnalyserObject.getClass();
+            Method moodMethod = objectClass.getMethod(analyseMood);
+            Object result = moodMethod.invoke(moodAnalyserObject);
+            return result;
+        } catch (NoSuchMethodException e) {
+            throw new MoodAnalyserCustomException("Method not found",MoodAnalyserCustomException.UserDefinedDataType.NO_SUCH_METHOD);
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }
