@@ -6,8 +6,9 @@ public class MoodAnalyserCustomException extends Exception {
 
     public enum UserDefinedDataType
     {
-        NULL_EXCEPTION
-    };
+        NULL_EXCEPTION,
+        EMPTY_EXCEPTION
+    }
     public MoodAnalyserCustomException(String message, UserDefinedDataType userDefinedObject)
     {
         super(message);

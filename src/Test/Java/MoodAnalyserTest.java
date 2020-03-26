@@ -5,6 +5,8 @@ import org.junit.Assert;
 import org.junit.Test;
 import Main.Java.MoodAnalyser;
 
+import java.lang.reflect.Constructor;
+
 public class MoodAnalyserTest {
 
     MoodAnalyser object=new MoodAnalyser("I'm in Happy Mood..");
@@ -32,6 +34,18 @@ public class MoodAnalyserTest {
         }
         catch( MoodAnalyserCustomException e) {
             Assert.assertEquals(MoodAnalyserCustomException.UserDefinedDataType.NULL_EXCEPTION,e.userDefinedObject);
+        }
+    }
+    @Test
+    public void emptyMessage_thenEmptyMoodException()
+    {
+        try{
+            MoodAnalyser moodAnalyserObject = new MoodAnalyser("");
+            moodAnalyserObject.moodAnalyseMethod();
+        }
+        catch (MoodAnalyserCustomException e)
+        {
+            Assert.assertEquals(MoodAnalyserCustomException.UserDefinedDataType.EMPTY_EXCEPTION,e.userDefinedObject);
         }
     }
 }
